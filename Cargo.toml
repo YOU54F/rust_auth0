@@ -1,0 +1,39 @@
+[package]
+name = "rust_auth0"
+version = "0.1.0"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+reqwest = {version = "0.12.2", features = ["blocking", "json"]}
+serde = { version = "1.0.197", features = ["derive"] }
+serde_json = "1.0.115"
+qr2term = "0.3.1"
+home = "0.5.5"
+openssl = { version = "0.10.64", features = ["vendored"] }
+
+[profile.release-slim]
+inherits = "release"
+strip = true      # 3.6mb -> 2.7mb
+opt-level = "z"     # 3.6mb -> 3.9mb
+codegen-units = 1 # 3.6mb -> 2.9mb
+panic = "abort"   # 3.6mb -> 2.7mb
+
+[profile.release-slim-lto]
+inherits = "release-slim"
+lto = true 
+
+# # 3.6mb -> 1.1mb 
+# [profile.release-aarch64-freebsd]
+# inherits = "release"
+# panic = "unwind"
+# # if panic abort is set for aarch64 freebsd, it fails in cross
+# # https://github.com/cross-rs/cross/issues/1363#issuecomment-1783917450
+
+# [target.'cfg(target_os = "freebsd")'.dependencies]
+# indexmap = { version = "1.9.3", features = ["std"] }
+
+[[bin]]
+name = "main"
+path = "src/main.rs"

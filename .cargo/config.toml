@@ -1,0 +1,18 @@
+[target.aarch64-apple-darwin]
+rustflags = [
+    "-C", "target-feature=+crt-static",
+    "-C","panic=abort",
+    "-Z","location-detail=none",
+    "-C","relocation-model=pie",
+    "-C","relocation-model=static",
+    "-C","strip=symbols",
+    "-C","lto=true",
+    "-C","opt-level=z",
+    "-C","codegen-units=1",
+    "-C","embed-bitcode=true",
+    ]
+
+[build]
+target = [
+    "aarch64-apple-darwin"
+    ]
